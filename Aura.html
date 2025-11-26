@@ -1,0 +1,672 @@
+<html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Bienestar Emocional</title>
+
+<!-- Fuente para el textarea -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* -------------------------------------------
+   PALETA Y BASE
+------------------------------------------- */
+:root {
+  --dorado: #e4b773;
+  --beige: #fffaf2;
+  --marron: #4b3b2f;
+  --suave: #fff5e1;
+  --radius: 12px;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: var(--beige);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* -------------------------------------------
+   BOTONES UNIVERSALES
+------------------------------------------- */
+.btn {
+  background: var(--suave);
+  border: 1px solid #f0e2c0;
+  border-radius: var(--radius);
+  color: var(--marron);
+  padding: 10px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.btn:hover,
+.btn.active {
+  background: var(--dorado);
+  color: white;
+}
+
+.btn-primary {
+  background: var(--dorado);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #d3a258;
+}
+
+/* -------------------------------------------
+   PANTALLA DE REGISTRO
+------------------------------------------- */
+#registro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background: linear-gradient(160deg, #fffaf2, #fdf3dc);
+  position: absolute;
+  inset: 0;
+}
+
+#registro h1 {
+  font-family: 'Times New Roman', serif;
+  font-size: 70px;
+  background: linear-gradient(180deg, #f9b65a, #e49e40);
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 8px;
+}
+
+#registro input {
+  padding: 10px;
+  margin: 6px;
+  border: none;
+  border-radius: 10px;
+  width: 220px;
+  background: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* -------------------------------------------
+   FONDO CON HALO
+------------------------------------------- */
+.aura-container {
+  position: relative;
+  text-align: center;
+  font-family: 'Times New Roman', serif;
+  margin-top: 40px;
+  display: none;
+}
+
+.halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(255,215,160,0.9) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -60%);
+  animation: pulso 4s infinite ease-in-out;
+}
+
+@keyframes pulso {
+  0% { transform: translate(-50%, -60%) scale(1); opacity: 0.9; }
+  50% { transform: translate(-50%, -60%) scale(1.1); opacity: 1; }
+  100% { transform: translate(-50%, -60%) scale(1); opacity: 0.9; }
+}
+
+.aura-text {
+  font-size: 110px;
+  font-weight: 500;
+  background: linear-gradient(180deg, #f9b65a, #e49e40);
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 10px;
+}
+
+/* -------------------------------------------
+   MENÚ PRINCIPAL
+------------------------------------------- */
+.menu {
+  display: none;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* -------------------------------------------
+   CONTENIDO GENERAL
+------------------------------------------- */
+#app {
+  display: none;
+  max-width: 900px;
+  margin: 20px auto 60px;
+  padding: 20px;
+  text-align: center;
+}
+
+section {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* -------------------------------------------
+   TARJETAS, EMOJIS Y TEXTAREA
+------------------------------------------- */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.emoji-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.emoji-btn {
+  font-size: 24px;
+  background: #fff4e0;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.emoji-btn.active {
+  background: var(--dorado);
+  color: white;
+  transform: scale(1.1);
+}
+
+textarea {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-family: "Quicksand", sans-serif;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+/* -------------------------------------------
+   RESPIRACIÓN
+------------------------------------------- */
+.circle {
+  width: 120px;
+  height: 120px;
+  background: #f6e3ba;
+  border-radius: 50%;
+  margin: 40px auto 20px;
+  display: none;
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.6); }
+  100% { transform: scale(1); }
+}
+
+#breathingInstructions {
+  font-size: 16px;
+  margin-top: 10px;
+  color: #4b3b2f;
+}
+
+#stopBreathing {
+  display: none;
+  margin: 15px auto 0;
+}
+
+/* -------------------------------------------
+   RECORDATORIOS
+------------------------------------------- */
+.recordatorio-btn {
+  width: 85%;
+  background: white;
+  border: 2px solid var(--dorado);
+  color: black;
+  border-radius: var(--radius);
+  padding: 14px;
+  margin: 10px auto;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  transition: 0.2s;
+}
+
+.recordatorio-btn:hover {
+  background: #fff2d9;
+}
+
+/* -------------------------------------------
+   CIERRE
+------------------------------------------- */
+#cierre {
+  display: none;
+  text-align: center;
+  padding: 60px;
+}
+</style>
+</head>
+<body>
+
+<!-- -------------------------
+      REGISTRO
+-------------------------- -->
+<div id="registro">
+  <h1>AURA</h1>
+  <p>Tu espacio personal de calma y equilibrio</p>
+  <input id="nombre" placeholder="Tu nombre">
+  <input id="edad" placeholder="Tu edad" type="number">
+  <button class="btn-primary" onclick="entrar()">Entrar</button>
+</div>
+
+<!-- -------------------------
+      TÍTULO PRINCIPAL
+-------------------------- -->
+<div class="aura-container" id="titulo">
+  <div class="halo"></div>
+  <div class="aura-text">AURA</div>
+</div>
+
+<!-- -------------------------
+      MENÚ
+-------------------------- -->
+<div class="menu" id="menu">
+  <button class="btn active" onclick="mostrar('inicio')">Inicio</button>
+  <button class="btn" onclick="mostrar('diario')">Diario</button>
+  <button class="btn" onclick="mostrar('respira')">Respira</button>
+  <button class="btn" onclick="mostrar('relaja')">Relaja</button>
+  <button class="btn" onclick="mostrar('recordatorios')">Recordatorios</button>
+  <button class="btn" onclick="cerrarJornada()">Cerrar jornada</button>
+</div>
+
+<!-- -------------------------
+      CONTENIDO
+-------------------------- -->
+<div id="app">
+
+  <!-- INICIO -->
+  <section id="inicio" class="active">
+    <h2 id="saludo"></h2>
+    <p><strong>Bienvenido a AURA 🌿</strong></p>
+    <p>Aquí encontrarás ejercicios de respiración, un diario emocional, audios de relajación y recordatorios de bienestar.</p>
+    <p>Úsalo cuando necesites liberar tensión, ordenar tus emociones o reconectar contigo.</p>
+    <div class="card">
+      <h3>📝 Cómo usar AURA</h3>
+      <p>• Ve a <strong>Diario</strong> para registrar cómo te sientes.</p>
+      <p>• Usa <strong>Respira</strong> para disminuir la presión emocional.</p>
+      <p>• Escucha audios en <strong>Relaja</strong> para bajar el ritmo.</p>
+      <p>• Explora <strong>Recordatorios</strong> para hábitos saludables.</p>
+    </div>
+  </section>
+
+  <!-- DIARIO -->
+  <section id="diario">
+    <h2>💬 Diario emocional</h2>
+    <div class="card">
+      <p>Selecciona un emoji y escribe cómo te sientes:</p>
+
+      <div class="emoji-row">
+        <button class="emoji-btn" data-emoji="😊">😊</button>
+        <button class="emoji-btn" data-emoji="😐">😐</button>
+        <button class="emoji-btn" data-emoji="😟">😟</button>
+        <button class="emoji-btn" data-emoji="😢">😢</button>
+        <button class="emoji-btn" data-emoji="😡">😡</button>
+      </div>
+
+      <textarea id="nota" placeholder="Escribe tu reflexión..."></textarea>
+      <button class="btn-primary" id="guardar">Guardar</button>
+      <div id="msg"></div>
+
+      <!-- Sugerencias -->
+      <div id="sugerencias" class="card" style="display:none; text-align:left;">
+        <h3>Recomendación para tu bienestar</h3>
+        <p id="textoSugerencia"></p>
+        <button class="btn-primary" id="cerrarSugerencia" style="margin-top:10px; width:100%;">Entendido</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESPIRACIÓN -->
+  <section id="respira">
+    <h2>🌬️ Ejercicio de respiración</h2>
+
+    <button class="btn-primary" id="startBreathing">Iniciar respiración</button>
+
+    <div id="breathingCircle" class="circle"></div>
+
+    <div id="breathingInstructions"></div>
+
+    <button class="btn" id="stopBreathing">Detener</button>
+  </section>
+
+  <!-- RELAJACIÓN -->
+  <section id="relaja">
+    <h2>🎧 Espacio de relajación</h2>
+
+    <div class="card">
+      <h3>🌿 Relajación suave</h3>
+      <audio controls>
+        <source src="https://cdn.pixabay.com/audio/2024/02/05/audio_a5d0d51573.mp3">
+      </audio>
+    </div>
+
+    <div class="card">
+      <h3>🌊 Sonidos de la naturaleza</h3>
+      <audio controls>
+        <source src="https://cdn.pixabay.com/audio/2023/02/28/audio_8b4b6544b8.mp3">
+      </audio>
+    </div>
+
+    <div class="card">
+      <h3>✨ Mensaje motivacional</h3>
+      <audio controls>
+        <source src="https://cdn.pixabay.com/audio/2022/11/24/audio_a32d2e86aa.mp3">
+      </audio>
+    </div>
+  </section>
+
+  <!-- RECORDATORIOS -->
+  <section id="recordatorios">
+    <h2>🔔 Recordatorios de bienestar</h2>
+
+    <button class="recordatorio-btn">💧 Hidrátate cada hora</button>
+    <button class="recordatorio-btn">🌿 Haz una pausa consciente</button>
+    <button class="recordatorio-btn">😊 Reconoce tus logros diarios</button>
+    <button class="recordatorio-btn">🚶 Realiza estiramientos breves</button>
+    <button class="recordatorio-btn">💤 Desconéctate al terminar tu jornada</button>
+  </section>
+
+</div>
+
+<!-- -------------------------
+      CIERRE DE JORNADA
+-------------------------- -->
+<div id="cierre">
+  <h2>🌙 Has completado tu jornada</h2>
+  <p>Has dado lo mejor de ti hoy.<br>Mañana será un nuevo día.</p>
+  <button class="btn-primary" onclick="seguir()">Seguir</button>
+  <button class="btn-primary" style="background:#b48a44" onclick="salir()">Salir</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ---------------------------
+        REGISTRO / INICIO
+  ---------------------------- */
+  function entrar() {
+    const nombre = document.getElementById("nombre").value.trim();
+    const edad = document.getElementById("edad").value.trim();
+    if (!nombre || !edad) { alert("Ingresa tu nombre y edad"); return; }
+    localStorage.setItem("usuarioAura", JSON.stringify({ nombre, edad }));
+    iniciarApp(nombre);
+  }
+  window.entrar = entrar; // exponer para el onclick inline
+
+  function iniciarApp(nombre) {
+    document.getElementById("registro").style.display = "none";
+    document.getElementById("titulo").style.display = "block";
+    document.getElementById("menu").style.display = "flex";
+    document.getElementById("app").style.display = "block";
+    mostrar('inicio', null);
+    const saludoEl = document.getElementById("saludo");
+    if (saludoEl) saludoEl.textContent = `Hola, ${nombre} 🌿`;
+  }
+
+  const usuario = JSON.parse(localStorage.getItem("usuarioAura"));
+  if (usuario?.nombre) iniciarApp(usuario.nombre);
+
+  /* ---------------------------
+        NAVEGACIÓN (robusta)
+  ---------------------------- */
+  function mostrar(id, btnEl) {
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    const target = document.getElementById(id);
+    if (target) target.classList.add("active");
+
+    // manejar clases de botones menu
+    document.querySelectorAll("#menu .btn").forEach(b => b.classList.remove("active"));
+    if (!btnEl) {
+      // intentar encontrar el botón por atributo onclick si no se proporcionó
+      const guess = Array.from(document.querySelectorAll('#menu .btn')).find(b => {
+        const onclick = b.getAttribute('onclick') || '';
+        return onclick.includes(`mostrar('${id}')`) || onclick.includes(`mostrar("${id}")`);
+      });
+      if (guess) guess.classList.add('active');
+    } else {
+      btnEl.classList.add('active');
+    }
+  }
+  window.mostrar = mostrar; // exponer si se usa inline
+
+  // Delegación de clicks en menu (por si los botones usan onclick inline o no)
+  const menu = document.getElementById('menu');
+  if (menu) {
+    menu.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn');
+      if (!btn) return;
+      // si el botón cierra jornada
+      if (btn.textContent.trim().toLowerCase().includes('cerrar jornada')) {
+        cerrarJornada();
+        return;
+      }
+      // obtener el id a mostrar desde el atributo onclick si existe
+      const onclick = btn.getAttribute('onclick') || '';
+      const match = onclick.match(/mostrar\(['"]([^'"]+)['"]/);
+      if (match) {
+        mostrar(match[1], btn);
+      }
+    });
+  }
+
+  /* ---------------------------
+        DIARIO EMOCIONAL
+  ---------------------------- */
+  const emojiButtons = Array.from(document.querySelectorAll('.emoji-btn'));
+  let emojiSeleccionado = "";
+
+  // asegurar que los botones existan
+  emojiButtons.forEach(btn => {
+    // añadir dataset si no tiene
+    if (!btn.dataset.emoji) {
+      btn.dataset.emoji = btn.textContent.trim();
+    }
+    btn.addEventListener('click', () => {
+      // desactivar todos
+      emojiButtons.forEach(b => b.classList.remove('active'));
+      // activar este
+      btn.classList.add('active');
+      emojiSeleccionado = btn.dataset.emoji || btn.textContent.trim();
+    });
+  });
+
+  // Si hay un guardar
+  const guardarBtn = document.getElementById('guardar');
+  if (guardarBtn) {
+    guardarBtn.addEventListener('click', () => {
+      const notaEl = document.getElementById('nota');
+      const texto = (notaEl && notaEl.value) ? notaEl.value.trim() : '';
+
+      if (!emojiSeleccionado) {
+        alert('Selecciona un emoji para continuar.');
+        return;
+      }
+
+      // Simular guardado en "base de datos" (en este prototipo -> localStorage)
+      const reflexiones = JSON.parse(localStorage.getItem('reflexionesAura') || '[]');
+      reflexiones.push({ emoji: emojiSeleccionado, texto, fecha: new Date().toISOString() });
+      localStorage.setItem('reflexionesAura', JSON.stringify(reflexiones));
+
+      // Limpiar textarea (simulación de enviar a BD)
+      if (notaEl) notaEl.value = '';
+
+      // Mensaje guardado
+      const msg = document.getElementById('msg');
+      if (msg) { msg.textContent = '✨ Guardado'; setTimeout(()=> msg.textContent = '', 2000); }
+
+      // Mostrar sugerencia según emoji
+      const sugerenciasMap = {
+        "😊": "Te sientes bien 🌟. Recomendación en AURA: ve a Recordatorios y elige una meta sencilla. Actividad externa: comparte algo positivo o da un paseo corto.",
+        "😐": "Día neutro. En AURA: realiza respiración suave en Respira. Actividad externa: toma 5 minutos lejos de la pantalla.",
+        "😟": "Preocupación. En AURA: realiza 2 ciclos en Respira. Actividad externa: estira cuello y hombros por 1 minuto.",
+        "😢": "Tristeza o cansancio. En AURA: escucha un audio en Relaja. Actividad externa: toma aire fresco o camina 2 minutos.",
+        "😡": "Enojo o frustración. En AURA: respiraciones con exhalaciones largas en Respira. Actividad externa: camina para liberar tensión."
+      };
+
+      const textoSug = sugerenciasMap[emojiSeleccionado] || "Prueba Respira o Relaja según cómo te sientas.";
+      const sugerenciasEl = document.getElementById('sugerencias');
+      const textoSugerenciaEl = document.getElementById('textoSugerencia');
+      if (textoSugerenciaEl) textoSugerenciaEl.textContent = textoSug;
+      if (sugerenciasEl) sugerenciasEl.style.display = 'block';
+
+      // Cerrar solo con "Entendido"
+      const cerrarBtn = document.getElementById('cerrarSugerencia');
+      if (cerrarBtn) {
+        cerrarBtn.onclick = () => {
+          if (sugerenciasEl) sugerenciasEl.style.display = 'none';
+        };
+      }
+    });
+  }
+
+  /* ---------------------------
+        RESPIRACIÓN (robusta)
+  ---------------------------- */
+  const circle = document.getElementById('breathingCircle');
+  const startBreathing = document.getElementById('startBreathing');
+  const stopBreathing = document.getElementById('stopBreathing');
+  const instructions = document.getElementById('breathingInstructions');
+
+  let breathState = { running: false, intervalId: null };
+
+  function stopBreathingFlow() {
+    if (breathState.intervalId) {
+      clearInterval(breathState.intervalId);
+      breathState.intervalId = null;
+    }
+    breathState.running = false;
+    if (circle) {
+      circle.style.transition = '';
+      circle.style.transform = 'scale(1)';
+      circle.style.display = 'none';
+    }
+    if (instructions) instructions.textContent = '';
+    if (startBreathing) startBreathing.style.display = 'inline-block';
+    if (stopBreathing) stopBreathing.style.display = 'none';
+  }
+
+  function startBreathingFlow() {
+    if (breathState.running) return;
+    breathState.running = true;
+    if (startBreathing) startBreathing.style.display = 'none';
+    if (stopBreathing) stopBreathing.style.display = 'inline-block';
+    if (circle) {
+      circle.style.display = 'block';
+      circle.style.transition = 'transform 2s ease-in-out';
+    }
+
+    // alternar inhalar/exhalar cada 2s (inhalar = expandir, exhalar = reducir)
+    let inhalar = true;
+    if (instructions) instructions.textContent = 'Inhala…';
+    if (circle) circle.style.transform = 'scale(1.4)';
+
+    breathState.intervalId = setInterval(() => {
+      inhalar = !inhalar;
+      if (inhalar) {
+        if (instructions) instructions.textContent = 'Inhala…';
+        if (circle) circle.style.transform = 'scale(1.4)';
+      } else {
+        if (instructions) instructions.textContent = 'Exhala…';
+        if (circle) circle.style.transform = 'scale(1)';
+      }
+    }, 2000);
+  }
+
+  // Start: con cuenta regresiva visible
+  if (startBreathing) {
+    startBreathing.addEventListener('click', () => {
+      if (breathState.running) return;
+      // mostrar cuenta regresiva en el mismo elemento de instrucciones
+      let count = 3;
+      if (instructions) { instructions.textContent = `Iniciando en ${count}...`; }
+      if (startBreathing) startBreathing.style.display = 'none';
+      if (stopBreathing) stopBreathing.style.display = 'inline-block';
+
+      const cd = setInterval(() => {
+        count--;
+        if (count > 0) {
+          if (instructions) instructions.textContent = `Iniciando en ${count}...`;
+        } else {
+          clearInterval(cd);
+          // iniciar flujo real
+          startBreathingFlow();
+        }
+      }, 1000);
+    });
+  }
+
+  if (stopBreathing) {
+    stopBreathing.addEventListener('click', () => {
+      stopBreathingFlow();
+    });
+  }
+
+  /* ---------------------------
+        CIERRE JORNADA y OTROS
+  ---------------------------- */
+  function cerrarJornada() {
+    document.getElementById("titulo").style.display = "none";
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("app").style.display = "none";
+    document.getElementById("cierre").style.display = "block";
+  }
+  window.cerrarJornada = cerrarJornada;
+
+  function seguir() {
+    document.getElementById("cierre").style.display = "none";
+    document.getElementById("titulo").style.display = "block";
+    document.getElementById("menu").style.display = "flex";
+    document.getElementById("app").style.display = "block";
+    mostrar('inicio', null);
+  }
+  window.seguir = seguir;
+
+  function salir() {
+    localStorage.removeItem('usuarioAura');
+    location.reload();
+  }
+  window.salir = salir;
+
+}); // DOMContentLoaded
+</script>
+
+
+
+</body>
+</html>
